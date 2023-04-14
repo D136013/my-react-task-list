@@ -1,9 +1,11 @@
 function Task (props){
-    const {id, nombre} = props
+    const {id, descripcion, completada, eliminarTarea} = props
     return (
         <div>
-            <label htmlFor={id}>{nombre}</label>
-            <input type="checkbox" id={id} />
+            <input type="checkbox" id={id} checked={completada} />
+            <label htmlFor={id}>{descripcion}</label>
+            <button>editar</button>
+            <button onClick={()=>eliminarTarea(id)}>eliminar</button>
         </div>
     )
 }
