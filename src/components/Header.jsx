@@ -1,6 +1,6 @@
-function Header (){
-    return(
-        <h1>lista de tareas</h1>
-    )
+export const Header = () =>{
+    
+    return <header>
+        <h1> <a href="/">To Do App</a></h1>
+    </header>
 }
-export default Header;

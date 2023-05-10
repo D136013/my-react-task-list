@@ -1,8 +1,8 @@
-import Header from "./components/Header";
-import TaskList from "./components/TaskList";
-import { useState } from "react";
+import { Header } from "./components/Header";
+import { TaskList } from "./components/TaskList";
+import { useState, useEffect } from "react";
 
-const TAREAS = [
+const tareasPendientes = [
   {id:1, descripcion:"lavar los platos", completada:false},
   {id:2, descripcion:"llevar la niña al colegio", completada:false},
   {id:3, descripcion:"cocinar", completada:false},
@@ -10,35 +10,76 @@ const TAREAS = [
 
 function App() {
 
-  const [listaTareas, setListaTareas] = useState(TAREAS)
-  const [tareaNueva, setTareaNueva] = useState("")
+  const [listaTareas, setListaTareas] = useState(
+    JSON.parse(localStorage.getItem("listaTareas")) || tareasPendientes
+  );
+  const [tareaNueva, setNuevaTarea] = useState("");
 
-  const handleChangeTareaNueva = (evento) => {
-    setTareaNueva(evento.target.value)
+  useEffect(() => {
+    localStorage.setItem("listaTareas", JSON.stringify(listaTareas));
+  });
+
+  const agregar = evento => {
+    evento.preventDefault();
+    if (tareaNueva.trim() !== "") {
+      const nuevaTareaConId = {
+        id: listaTareas.length + 1,
+        descripcion: tareaNueva ,
+        completado: false,
+      };
+      setListaTareas([...listaTareas, nuevaTareaConId]);
+      setNuevaTarea("");
+    }
   }
 
-  const handleClickAgregar = (evento) => {
-    evento.preventDefault()
-    setListaTareas([...listaTareas, {id: new Date().getTime(), descripcion: tareaNueva, completada: false}])
+  const handlerChange = evento => {
+    setNuevaTarea(evento.target.value);
+  };
+
+  const eliminarTarea = (id,) => {
+    const nuevasTareas = listaTareas.filter(tarea => tarea.id !== id);
+    setListaTareas(nuevasTareas);
+    console.log("aqui se elimina")
+    console.log(nuevasTareas)
+    };
+
+    const editarTarea = (id, nuevaDescripcion) => {
+      const nuevasTareas = listaTareas.map(tarea => {
+        if (tarea.id ===id) {
+          tarea.descripcion = nuevaDescripcion;
+        }
+        return tarea;
+      });
+      setListaTareas(nuevasTareas);
+    };
+
+  const onComplete =  (id, bolean) => {
+    console.log (bolean)
   }
 
-  const eliminarTarea = (id)=> {
-    let tareasNoBorradas = listaTareas.filter((tarea) => tarea.id !== id)
-    setListaTareas(tareasNoBorradas)
+    return (
+      <div className="app">
+        <Header/>
+        <form className="f1">
+          <input className="primerimput"
+          type="text"
+          maxLength="25"
+          value={tareaNueva}
+          onChange={handlerChange}
+          placeholder="Ingrese Tarea"
+          />
+          <button className="primerboton" type="submit" onClick={agregar}>
+            Agregar Tarea
+          </button>
+        </form>
+        <TaskList
+          pendientes={listaTareas}
+          onEliminar={eliminarTarea}
+          onEditar={editarTarea}
+          onCompletar={onComplete}
+        />
+      </div>
+    );
   }
 
-  return (
-    <div>
-      <Header />
-
-      <form action="">
-          <input onChange={handleChangeTareaNueva} type="text" placeholder="agregue una tarea" />
-          <button onClick={handleClickAgregar}>+</button>
-      </form>
-
-      <TaskList lista={listaTareas} eliminarTarea={eliminarTarea} />
-    </div>
-  )
-}
-
-export default App
+  export default App;
