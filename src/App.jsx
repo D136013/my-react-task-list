@@ -1,61 +1,21 @@
 import { Header } from "./components/Header";
 import { TaskList } from "./components/TaskList";
 import { useState, useEffect } from "react";
+import useTask from "./hooks/useTask";
 
-const tareasPendientes = [
-  {id:1, descripcion:"lavar los platos", completada:false},
-  {id:2, descripcion:"llevar la niña al colegio", completada:false},
-  {id:3, descripcion:"cocinar", completada:false},
-]
 
 function App() {
+const option = useTask()
+const {listaTareas, eliminarTarea, editarTarea, agregar, tareaNueva, setNuevaTarea, completarTarea} = option
+console.log(listaTareas)
 
-  const [listaTareas, setListaTareas] = useState(
-    JSON.parse(localStorage.getItem("listaTareas")) || tareasPendientes
-  );
-  const [tareaNueva, setNuevaTarea] = useState("");
-
-  useEffect(() => {
-    localStorage.setItem("listaTareas", JSON.stringify(listaTareas));
-  });
-
-  const agregar = evento => {
-    evento.preventDefault();
-    if (tareaNueva.trim() !== "") {
-      const nuevaTareaConId = {
-        id: listaTareas.length + 1,
-        descripcion: tareaNueva ,
-        completado: false,
-      };
-      setListaTareas([...listaTareas, nuevaTareaConId]);
-      setNuevaTarea("");
-    }
-  }
 
   const handlerChange = evento => {
     setNuevaTarea(evento.target.value);
   };
 
-  const eliminarTarea = (id,) => {
-    const nuevasTareas = listaTareas.filter(tarea => tarea.id !== id);
-    setListaTareas(nuevasTareas);
-    console.log("aqui se elimina")
-    console.log(nuevasTareas)
-    };
 
-    const editarTarea = (id, nuevaDescripcion) => {
-      const nuevasTareas = listaTareas.map(tarea => {
-        if (tarea.id ===id) {
-          tarea.descripcion = nuevaDescripcion;
-        }
-        return tarea;
-      });
-      setListaTareas(nuevasTareas);
-    };
-
-  const onComplete =  (id, bolean) => {
-    console.log (bolean)
-  }
+ 
 
     return (
       <div className="app">
@@ -73,11 +33,13 @@ function App() {
           </button>
         </form>
         <TaskList
+        
           pendientes={listaTareas}
           onEliminar={eliminarTarea}
           onEditar={editarTarea}
-          onCompletar={onComplete}
+          onCompletar={completarTarea}
         />
+
       </div>
     );
   }

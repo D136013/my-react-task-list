@@ -21,7 +21,7 @@ export const TaskList = (props) => {
                 key={tarea.id}
                 id={tarea.id}
                 descripcion={tarea.descripcion}
-                completado={tarea.completado}
+                completada={tarea.completada}
                 onEliminar={handleElinar}
                 onEditar={handleEditar}
                 onCompletar={onCompletar}

@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 export const Task = (props) => {
-    const {id, descripcion, completado, onEliminar, onEditar, onCompletar} = props;
+    const {id, descripcion, completada, onEliminar, onEditar, onCompletar} = props;
     
     const [modoEdicion, setModoEdicion] = useState (false);
     const [nuevaDescripcion, setNuevaDescripcion] = useState(descripcion);
-    const [estaCompletado, setEstaCompletado] = useState(completado);
+    const [estaCompletado, setEstaCompletado] = useState(completada);
 
     const handleEliminar = () => {
         console.log("1")
