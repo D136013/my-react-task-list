@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useTask = () => {
+export const useTask = () => {
   const [arrayTask, setArrayTask] = useState([
     {
       id: 1,
@@ -100,5 +100,3 @@ const useTask = () => {
     },
   ];
 };
-
-export default useTask;

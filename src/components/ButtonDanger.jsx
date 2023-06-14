@@ -1,4 +1,4 @@
-const ButtonDanger = ({onClickClear,taskPending}) => {
+export const ButtonDanger = ({onClickClear,taskPending}) => {
   return (
     <div className="buttonDanger">
         <p>Tu tienes {taskPending} tareas pendientes</p>
@@ -6,6 +6,4 @@ const ButtonDanger = ({onClickClear,taskPending}) => {
     </div>
   )
 }
-
-export default ButtonDanger
    
