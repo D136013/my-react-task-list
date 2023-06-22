@@ -1,5 +1,5 @@
 import React from "react";
-import {useTask} from "./useTask";
+import { useTask } from "./useTask";
 
 export const TareasPage = () => {
   const [states] = useTask();
@@ -7,11 +7,11 @@ export const TareasPage = () => {
   console.log(arrayTask);
   return (
     <div>
-      <h1>Mis Tasks</h1>
+      <h1>Mis Tareas</h1>
       <div>
         <p className="d-inline mr-3">Id</p>
-        <p className="d-inline mr-3">name</p>
-        <p className="d-inline">Description</p>
+        <p className="d-inline mr-3">Nombre</p>
+        <p className="d-inline">Descripcion</p>
       </div>
       {arrayTask.map((task, key) => {
         return (

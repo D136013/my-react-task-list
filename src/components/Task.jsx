@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { Modal } from "./Modal";
+
 
 export const Task = ({ dataTask, onClickDelete, onClickRadio, onClickUpdate }) => {
   const [active, setActive] = useState(dataTask.state);
@@ -14,6 +15,7 @@ export const Task = ({ dataTask, onClickDelete, onClickRadio, onClickUpdate }) =
   return (
     <div className="card containerCardTask">
       <div className="form-check" onClick={() => handleClick()}>
+
         <input
           className="form-check-input"
           type="radio"
